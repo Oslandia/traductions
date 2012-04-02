@@ -35,7 +35,7 @@ Notes
 Les notes sont utilisées pour fournir une information utile mais non critique pour la 
 compréhension globale du sujet traité.
 
-.. note:: Si vous n'avez pas manger une pomme aujourd'hui, le docteur devrait se 
+.. note:: Si vous n'avez pas mangé une pomme aujourd'hui, le docteur devrait se 
     mettre en route.
 
 Fonctions
