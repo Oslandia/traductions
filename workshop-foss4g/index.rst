@@ -3,7 +3,7 @@
 Introduction à PostGIS
 =======================
 
-Tennez vous prêt
+Tenez vous prêt
 ---------------
 
 * Ce document utilise une archive contenant des applications et des données : http://s3.opengeo.org/postgisintro-2010-2.zip
