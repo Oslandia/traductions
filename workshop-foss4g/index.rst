@@ -45,7 +45,6 @@ Table des matières
    indexing
    projection
    projection_exercises   
-   geography
    geometry_returning
    joins_advanced
    validity
