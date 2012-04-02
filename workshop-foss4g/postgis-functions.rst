@@ -7,7 +7,7 @@ Constructeurs
 ------------
 
 :command:`ST_MakePoint(Longitude, Latitude)` 
-  Retourne un nouveau point. Note : ordre des coordonées (longitude puis latitude).
+  Retourne un nouveau point. Note : ordre des coordonnées (longitude puis latitude).
 
 :command:`ST_GeomFromText(WellKnownText, srid)`
   Retourne une nouvelle géométrie à partir d'un représentation au format WKT et un SRID.
