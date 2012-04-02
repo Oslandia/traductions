@@ -1,12 +1,12 @@
 .. _geometries_exercises:
 
 Partie 9 : Exercices sur les géométries
-======================================
+=======================================
 
-Voici un petit rappel de toutes les fonction que nous avons abordé jusqu'à présent. Elles devraient être utiles pour les exercices !
+Voici un petit rappel de toutes les fonctions que nous avons abordées jusqu'à présent. Elles devraient être utiles pour les exercices !
 
- * :command:`sum(expression)` agrégation retournant la somme d'un ensemble
- * :command:`count(expression)` agrégation retournant le nombre d'éléments d'un ensemble
+ * :command:`sum(expression)` agrégat retournant la somme d'un ensemble
+ * :command:`count(expression)` agrégat retournant le nombre d'éléments d'un ensemble
  * :command:`ST_GeometryType(geometry)` retourne le type de la géométrie
  * :command:`ST_NDims(geometry)` retourne le  nombre de dimensions
  * :command:`ST_SRID(geometry)` retourne l'identifiant du système de références spatiales
