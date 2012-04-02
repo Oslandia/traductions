@@ -5,7 +5,7 @@ Partie 4 : Charger des données spatiales
 
 Supporté par une grande variété de librairies et d'applications, PostGIS fournit de nombreux outils pour charger des données. Cette partie traitera uniquement du chargement basique de données, c'est à dire le chargement de fichiers Shapefile (.shp) en utilisant l'outil dédié de PostGIS.
 
-#. Premièrement, retournez sur le Dashboard et cliquez sur le lien **Import shapefiles** de la section PostGIS. L'interface d'import de données Shapefile pgShapeLoader se lance.
+#. Dans les plugins de PgAdmin, il existe un outil d'importation de shapefiles : **Import shapefiles**.
 
    .. image:: ./screenshots/pgshapeloader_01.png
 
@@ -20,13 +20,9 @@ Supporté par une grande variété de librairies et d'applications, PostGIS four
       * - **Password**
         - ``postgres``
       * - **Server Host**
-        - ``localhost`` ``54321``
+        - ``localhost`` ``5432``
       * - **Database**
         - ``nyc``
-
-  .. note:: 
-  
-     Affecter le numéro de port **54321** est très important ! Le serveur PostGIS d'OpenGeo utilise ce port et non le port par défaut (5432).
 
 #. Saisissez les détails de la section *Configuration*.
 
@@ -142,12 +138,13 @@ Votre tâche consiste dans cette section à créer une base de données et à aj
 
    N'oubliez pas saisir le nom de l'utilisateur et le numéro de port losque vous créer une base de données en ligne de commande.
     
-Les choses à essayer : Visualiser des données avec uDig
-------------------------------------------------------
+Les choses à essayer : Visualiser des données avec QGIS
+-------------------------------------------------------
 
-`uDig <http://udig.refractions.org>`_, (User-friendly Desktop Internet GIS) est un outil bureautique de visualisation/edition SIG permettant de visualiser rapidement se données. Vous pouvez visualiser un grand nombre de formats différents dont les Shapefiles et les bases de données PostGIS. Son interface graphique vous permet d'explorer vos données facilement mais aussi de les tester et les styler rapidement.
+QGIS est une application SIG bureautique complète, et permet de se connecter à une base de données spatiale pour visualiser les données qui y sont stockées.
 
-Utilisez cette application pour vous connecter à votre base de données PostGIS. L'application est contenu dans le répertoire ``software``.
+Lancez QGIS et ouvrez les tables de la base de données où nous venons de charger les shapefiles, à l'aide de l'entrée de menu **Charger une couche PostGIS** ou du bouton (bleu) correspondant.
+
 
 .. rubric:: Footnotes
 
