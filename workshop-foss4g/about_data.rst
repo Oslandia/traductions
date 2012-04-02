@@ -12,7 +12,7 @@ Pour visualiser la nature de vos tables depuis pgAdmin, cliquez avec le bouton d
 nyc_census_blocks
 -----------------
 
-Un bloc recencé est la plus petite entité géographique pour laquelle un recencement est raporté. Toutes les couches représentant les niveaux supérieurs (régions, zones de métro, comtés) peuvent être contruites à partir de ces blocs. Nous avons attaché des données démographiques aux blocs.
+Un bloc recensé est la plus petite entité géographique pour laquelle un recensement est raporté. Toutes les couches représentant les niveaux supérieurs (régions, zones de métro, comtés) peuvent être contruites à partir de ces blocs. Nous avons attaché des données démographiques aux blocs.
 
 Nombre d'enregistrements : 36592
 
@@ -131,13 +131,13 @@ Données socio-démographiques de la ville de New York
 
 .. note::
 
-   La donnée ``nyc_census_sociodata`` est une table attributaire. Nous devrons nous connecter aux géométries correspondant à la zone du recenssement avant de conduire toute analyse spatiale .
+   La donnée ``nyc_census_sociodata`` est une table attributaire. Nous devrons nous connecter aux géométries correspondant à la zone du recensement avant de conduire toute analyse spatiale .
    
 .. list-table::
    :widths: 20 80
 
    * - **tractid**
-     - Un code à 11 chiffre qui identifie chaque secteur de recessement. **tract**. Eg: 36005000100
+     - Un code à 11 chiffre qui identifie chaque secteur de recensement. **tract**. Eg: 36005000100
    * - **transit_total**
      - Nombre de travailleurs dans le secteur
    * - **transit_public**
