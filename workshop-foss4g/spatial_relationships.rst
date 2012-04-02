@@ -1,13 +1,13 @@
 .. _spatial_relationships:
 
 Partie 10 : Les relations spatiales
-=================================
+===================================
 
 Jusqu'à présent, nous avons utilisé uniquement des fonctions qui permettent de mesurer (:command:`ST_Area`, :command:`ST_Length`), de sérialiser (:command:`ST_GeomFromText`) ou désérialiser (:command:`ST_AsGML`) des géométries. Ces fonctions sont toutes utilisées sur une géométrie à la fois.
 
 Les base de données spatiales sont puissantes car elle ne se contentent pas de stocker les géométries, elle peuvent aussi vérifier les *relations entre les géométries*.
 
-Pour les questions comme "Quel est le plus proche garage à vélo prêt du parc ?" ou "Ou est l'intersection du métro avec telle rue ?", nous devrons comparer les géométries représentant les garage à vélo, les rues et les lignes de métro.
+Pour les questions comme "Quel est le plus proche garage à vélo près du parc ?" ou "Où est l'intersection du métro avec telle rue ?", nous devrons comparer les géométries représentant les garages à vélo, les rues et les lignes de métro.
 
 Le standard de l'OGC définit l'ensemble de fonctions suivant pour comparer les géométries.
 
@@ -60,12 +60,12 @@ ST_Intersects, ST_Disjoint, ST_Crosses et ST_Overlaps
 .. figure:: ./spatial_relationships/st_intersects.png
    :align: center
 
-:command:`ST_Intersects(geometry A, geometry B)` retourne t (TRUE) si l'intersection ne renvoit pas un ensemble vide de résultats. Intersects retourne le résultat exactement inverse de la fonction disjoint.
+:command:`ST_Intersects(geometry A, geometry B)` retourne t (TRUE) si l'intersection ne renvoie pas un ensemble vide de résultats. Intersects retourne le résultat exactement inverse de la fonction disjoint.
 
 .. figure:: ./spatial_relationships/st_disjoint.png
    :align: center
 
-L'opposé de ST_Intersects est :command:`ST_Disjoint(geometry A , geometry B)`. Si deux géométries sont disjointes, elle ne s'intersectent pas et vice-versa. En fait, il est souvent plus éfficace de tester si deux géométries ne s'intersectent pas que de tester si elles sont dijointes du fait que le test d'intersection peut être spatialement indexé alors que le test disjoint ne le peut pas.
+L'opposé de ST_Intersects est :command:`ST_Disjoint(geometry A , geometry B)`. Si deux géométries sont disjointes, elle ne s'intersectent pas et vice-versa. En fait, il est souvent plus efficace de tester si deux géométries ne s'intersectent pas que de tester si elles sont dijointes du fait que le test d'intersection peut être spatialement indexé alors que le test disjoint ne le peut pas.
 
 .. figure:: ./spatial_relationships/st_crosses.png  
    :align: center
@@ -77,7 +77,7 @@ Pour les comparaisons de couples de types multipoint/polygon, multipoint/linestr
 
 :command:`ST_Overlaps(geometry A, geometry B)` compare deux géométries de même dimension et retourne TRUE si leur intersection est une géométrie différente des deux fournies mais de même dimension.
 
-Essayons de prendre la station de métro de Broad Street et de déterminer sont voisinage en utilisant la fonction :command:`ST_Intersects` :
+Essayons de prendre la station de métro de Broad Street et de déterminer son voisinage en utilisant la fonction :command:`ST_Intersects` :
 
 .. code-block:: sql
 
@@ -106,12 +106,12 @@ ST_Touches
 ST_Within et ST_Contains
 -------------------------
 
-:command:`ST_Within` et :command:`ST_Contains` test si une géométrie est totalement incluse dans l'autre. 
+:command:`ST_Within` et :command:`ST_Contains` teste si une géométrie est totalement incluse dans l'autre. 
 
 .. figure:: ./spatial_relationships/st_within.png
    :align: center
     
-:command:`ST_Within(geometry A , geometry B)` retourne TRUE si la première géométrie est complètement contenue dans l'autre. ST_Within test l'exact opposé au résultat de ST_Contains.  
+:command:`ST_Within(geometry A , geometry B)` retourne TRUE si la première géométrie est complètement contenue dans l'autre. ST_Within teste l'exact opposé au résultat de ST_Contains.  
 
 :command:`ST_Contains(geometry A, geometry B)` retourne TRUE si la seconde géométrie est complètement contenue dans la première géométrie.
 
@@ -119,7 +119,7 @@ ST_Within et ST_Contains
 ST_Distance et ST_DWithin
 --------------------------
 
-Une question fréquente dans le domaine du SIG est "trouver tout les éléments qui se trouvent à une distance X de cet autre élément".
+Une question fréquente dans le domaine du SIG est "trouver tous les éléments qui se trouvent à une distance X de cet autre élément".
 
 La fonction :command:`ST_Distance(geometry A, geometry B)` calcule la *plus courte* distance entre deux géométries. Cela est pratique pour récupérer la distance entre les objets.
 
@@ -133,12 +133,12 @@ La fonction :command:`ST_Distance(geometry A, geometry B)` calcule la *plus cour
 
   3
 
-Pour tester si deux objets sont à la même distance d'un autre, la fonction :command:`ST_DWithin` fournit un test tirant profit des indexes. Cela est très utile pour répondre a une question telle que: "Combien d'arbre se situent dans un buffer de 500 mètres autour de cette route ?". Vous n'avez pas à calculer le buffer, vous avez simplement besoin de tester la distance entre les géométries.
+Pour tester si des objets sont à la même distance d'un autre, la fonction :command:`ST_DWithin` fournit un test tirant profit des indexes. Cela est très utile pour répondre a une question telle que: "Combien d'arbres se situent dans un buffer de 500 mètres autour de cette route ?". Vous n'avez pas à calculer le buffer, vous avez simplement besoin de tester la distance entre les géométries.
 
   .. figure:: ./spatial_relationships/st_dwithin.png
      :align: center
     
-En utilisant de nouveau notre station de métro Broad Street, nous pouvons trouver les rues voisines (à 10 mètres de) de la station :
+En utilisant de nouveau notre station de métro Broad Street, nous pouvons trouver les rues voisines (à 10 mètres) de la station :
 
 .. code-block:: sql
 
@@ -175,7 +175,7 @@ Liste des fonctions
 
 `ST_DWithin(geometry A, geometry B, radius) <http://postgis.org/docs/ST_DWithin.html>`_ : retourne TRUE si les géométries sont distante (radius) l'une de l'autre. 
 
-`ST_Equals(geometry A, geometry B) <http://postgis.org/docs/ST_Equals.html>`_ : retourn TRUE si les géométries fournis représentent la même géométrie. L'ordre des entités n'est pas prit en compte.
+`ST_Equals(geometry A, geometry B) <http://postgis.org/docs/ST_Equals.html>`_ : retourn TRUE si les géométries fournies représentent la même géométrie. L'ordre des entités n'est pas pris en compte.
 
 `ST_Intersects(geometry A, geometry B) <http://postgis.org/docs/ST_Intersects.html>`_ : retourne TRUE si les géométries s'intersectent - (ont un espace en commun) et FALSE si elles n'en ont pas (elles sont disjointes). 
 
