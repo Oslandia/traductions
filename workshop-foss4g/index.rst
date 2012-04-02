@@ -6,19 +6,15 @@ Introduction à PostGIS
 Tenez vous prêt
 ---------------
 
-* Ce document utilise une archive contenant des applications et des données : http://s3.opengeo.org/postgisintro-2010-2.zip
-* Télécharger l'archive et décompressez-le dans le répetoire de votre choix.
+* Ce document utilise une machine virtuelle Ubuntu, contenant les programmes, les supports et les données.
 
 Contenu de l'archive
 ------------------
 
-Dans l'archive liée à ce document, vous trouverez:
+Dans le répertoire utilisateur, vous trouverez :
 
 **workshop/** 
   un répertoire contenant ce document au format HTML
-
-**software/** 
-  un répertoire contenant tout les logiciels que nous installerons
 
 **data/** 
   un répertoire contenant les fichier au format Shapefiles que nous utiliserons
@@ -35,7 +31,6 @@ Table des matières
 
    welcome 
    introduction
-   installation
    creating_db
    loading_data
    about_data
