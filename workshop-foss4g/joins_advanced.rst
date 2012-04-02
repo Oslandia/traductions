@@ -3,21 +3,21 @@
 Partie 19 : Plus de jointures spatiales
 =======================================
 
-Dans la partie précédente nous avons vu les fonctions :command:`ST_Centroid(geometry)` et :command:`ST_Union([geometry])` ainsi que quelques exemples simples. Dans cette partie nous réaliseront des choses plus éllaborées.
+Dans la partie précédente nous avons vu les fonctions :command:`ST_Centroid(geometry)` et :command:`ST_Union([geometry])` ainsi que quelques exemples simples. Dans cette partie nous réaliserons des choses plus élaborées.
 
 .. _creatingtractstable:
 
 Création de la table de traçage des recensements
 ------------------------------------------------
 
-Dans le répertoire ``\data\`` des travaux pratiques, il y a un fichier qui contient des données attributaires, mais pas de géométries, ce fichier est nommé ``nyc_census_sociodata.sql``. La table contient des données sociaux-économiques interressantes à propos de New York : revenus financiers, éducation .... Il y a juste un problème, les données sont rassemblé en "trace de recensement" et nous n'avons pas de données spatiales associées !
+Dans le répertoire ``\data\`` des travaux pratiques, il y a un fichier qui contient des données attributaires, mais pas de géométries, ce fichier est nommé ``nyc_census_sociodata.sql``. La table contient des données sociaux-économiques intéressantes à propos de New York : revenus financiers, éducation .... Il y a juste un problème, les données sont rassemblé en "trace de recensement" et nous n'avons pas de données spatiales associées !
 
 Dans cette partie nous allons
 
  * Charger la table ``nyc_census_sociodata.sql``
  * Créer une table spatiale pour les traces de recensement
  * Joindre les données attributaires à nos données spatiales
- * Réaliser certaines analises sur nos nouvelles données
+ * Réaliser certaines analyses sur nos nouvelles données
  
 Chargement du fichier nyc_census_sociodata.sql
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -30,7 +30,7 @@ Chargement du fichier nyc_census_sociodata.sql
 Création de la table traces de recensement
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  
-Comme nous l'avons dans la partie précédente, nous pouvons construire des géométries de niveau suppérieur en utilisant nos blocks de base en utilisant une partie de la clef ``blkid``. Afin de calculer les traces de recensement, nous avons besoin de regrouper les blocks en uitlisant les 11 premiers caractères de la colonne ``blkid``. 
+Comme nous l'avons dans la partie précédente, nous pouvons construire des géométries de niveau suppérieur en utilisant nos blocs de base en utilisant une partie de la clef ``blkid``. Afin de calculer les traces de recensement, nous avons besoin de regrouper les blocks en uitlisant les 11 premiers caractères de la colonne ``blkid``. 
  
   ::
 
@@ -63,7 +63,7 @@ Création de la nouvelle table en utilisant la fonction d'agrégation :command:`
 Regrouper les données attributaires et spatiales
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-L'objectif est ici de regrouper les données spatiales que nous avons créé avec les donées attributaires que nous avions chargé initialement.
+L'objectif est ici de regrouper les données spatiales que nous avons créées avec les données attributaires que nous avions chargées initialement.
   
 .. code-block:: sql
   
@@ -84,10 +84,10 @@ L'objectif est ici de regrouper les données spatiales que nous avons créé ave
 
 .. _interestingquestion:
 
-Répondre à une question interressante
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Répondons à une question intéressante
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      
-Répondre à une question interressante ! "Lister les 10 meilleurs quartiers ordonnées par la proportion de personne ayant acquis un diplome". 
+Répondons à une question intéressante ! "Lister les 10 meilleurs quartiers ordonnées par la proportion de personne ayant acquis un diplôme". 
   
 .. code-block:: sql
   
@@ -102,7 +102,7 @@ Répondre à une question interressante ! "Lister les 10 meilleurs quartiers ord
   ORDER BY graduate_pct DESC
   LIMIT 10;
 
-Nous sommons les statistiques qui nous interressent, nous les divisons ensuite à la fin. Afin d'aviter l'erreur de non-division par zero, nous ne prennons pas en compte les quartiers qui n'ont aucune personne ayant obtenu un diplome.
+Nous sommons les statistiques qui nous intéressent, nous les divisons ensuite à la fin. Afin d'éviter l'erreur de division par zéro, nous ne prenons pas en compte les quartiers qui n'ont aucune personne ayant obtenu un diplôme.
 
 ::
   
@@ -125,7 +125,7 @@ Nous sommons les statistiques qui nous interressent, nous les divisons ensuite �
 Polygones/Jointures de polygones
 ---------------------------------
 
-Dans notre requête interressante (dans :ref:`interestingquestion`) nous avons utilisé la fonction :command:`ST_Intersects(geometry_a, geometry_b)` pour déterminer quelle entité polygonale à inclure dans chaque groupe de quartier. Ce qui nous conduit à la question : que ce passe-t-il si une entité tombe ntre deux quartier ? Il intersectera chacun d'entre eux et ainsi sera inclu dans **chacun** des résultats. 
+Dans notre requête intéressante (dans :ref:`interestingquestion`) nous avons utilisé la fonction :command:`ST_Intersects(geometry_a, geometry_b)` pour déterminer quelle entité polygonale inclure dans chaque groupe de quartier. Ce qui nous conduit à la question : que se passe-t-il si une entité tombe entre deux quartier ? Il intersectera chacun d'entre eux et ainsi sera inclu dans **chacun** des résultats. 
 
 .. image:: ./screenshots/centroid_neighborhood.png
 
@@ -174,9 +174,9 @@ Remarquez que la requête prend plus de temps à s'exécuter, puisque la fonctio
 Jointures utilisant un large rayon de distance
 ----------------------------------------------
 
-Une requête qu'il est sympat de demander est : "Comment les temps de permutation des gens proches (dans un rayon de 500 metres ) des stations de métros diffèrent de ceuxqui en vive loin ? "
+Une requête qui peut venir à l'esprit  : "Comment les temps de permutation des gens proches (dans un rayon de 500 metres ) des stations de métros diffèrent de ceux qui en sont éloignés ? "
 
-Néanmoins, la question rencontre les même problème de double comptage : plusieurs personnes seront dans un rayon de 500 metres de plusieurs stations de métros différentes. Coparons la population de New York :
+Néanmoins, la question rencontre les même problèmes de double comptage : plusieurs personnes seront dans un rayon de 500 metres de plusieurs stations de métros différentes. Comparons la population de New York :
 
 .. code-block:: sql
 
@@ -200,11 +200,11 @@ Avec la population des gens de New York dans un rayon de 500 metres d'une statio
 
   10556898
 
-Il y a plus de personnes proches du métro qu'il y a de peronnes ! Clairement, notre requête SQL simple rencontre un gros problème de double comptage. Vous pouvez voir le problème en regardant l'image des zones tampons créées pour les stations.
+Il y a plus de personnes proches du métro qu'il y a de personnes ! Clairement, notre requête SQL simple rencontre un gros problème de double comptage. Vous pouvez voir le problème en regardant l'image des zones tampons créées pour les stations.
 
 .. image:: ./screenshots/subways_buffered.png
 
-La solution est de s'assurer que nous avons seulement des blocks distincts avant de les les regrouper. Nou spouvons réaliser cela en cassant notre requête en sous-requêtes qui récupère les blocks distincts, regroupé ensuite pour retrouner notre réponse :
+La solution est de s'assurer que nous avons seulement des blocs distincts avant de les regrouper. Nous pouvons réaliser cela en cassant notre requête en sous-requêtes qui récupèrent les blocs distincts, regroupés ensuite pour retourner notre réponse :
 
 .. code-block:: sql
 
