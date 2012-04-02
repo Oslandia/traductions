@@ -35,7 +35,7 @@ Vous trouverez ci-dessous des informations utiles pour commencer. Référez-vous
    * - **the_geom**
      - Polygone délimitant le bloc
 
-Ici se trouvent certaines des fonctions d'aggrégation qui vous seront utiles pour répondre aux questions :
+Ici se trouvent certaines des fonctions d'agrégation qui vous seront utiles pour répondre aux questions :
 
  * avg() - la moyenne des vlauers dans un ensemble d'enregistrements
  * sum() - la somme des valeurs d'un ensembe d'enregistrements
@@ -104,8 +104,8 @@ Maintenant les questions :
 Liste des fonctions
 -------------------
 
-`avg(expression) <http://www.postgresql.org/docs/8.2/static/functions-aggregate.html#FUNCTIONS-AGGREGATE-TABLE>`_: fonction d'aggrégation de PostgreSQL qui renvoit la moyenne d'un esemble de nombres.
+`avg(expression) <http://www.postgresql.org/docs/8.2/static/functions-aggregate.html#FUNCTIONS-AGGREGATE-TABLE>`_: fonction d'agrégation de PostgreSQL qui renvoit la moyenne d'un esemble de nombres.
 
-`count(expression) <http://www.postgresql.org/docs/8.2/static/functions-aggregate.html#FUNCTIONS-AGGREGATE-TABLE>`_: une fonction d'aggrégation de PostgreSQL qui retourne le nombre d'éléments dans un esemble.
+`count(expression) <http://www.postgresql.org/docs/8.2/static/functions-aggregate.html#FUNCTIONS-AGGREGATE-TABLE>`_: une fonction d'agrégation de PostgreSQL qui retourne le nombre d'éléments dans un esemble.
 
-`sum(expression) <http://www.postgresql.org/docs/8.2/static/functions-aggregate.html#FUNCTIONS-AGGREGATE-TABLE>`_: une fonction d'aggrégation de PostgreSQL qui retourne la somme des valeurs numériques d'un ensemble.
+`sum(expression) <http://www.postgresql.org/docs/8.2/static/functions-aggregate.html#FUNCTIONS-AGGREGATE-TABLE>`_: une fonction d'agrégation de PostgreSQL qui retourne la somme des valeurs numériques d'un ensemble.
