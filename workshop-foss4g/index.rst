@@ -48,7 +48,6 @@ Table des matières
    geometry_returning
    joins_advanced
    validity
-   tuning
    equality
    postgis-functions
    glossary
