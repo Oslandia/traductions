@@ -3,9 +3,9 @@
 Partie 15 : Projections des données
 ===================================
 
-La Terre n'est pas plate et il n'y a pas de moyen simple de la poser à plat sur une carte en papier (ou l'écran d'un ordinateur). Certaines projections préservent les aires, donc tout les objets ont des tailles relatives aux autres, d'autre projections conservent les angles (conformes) comme la projection Mercator. Certaines projections tentent de minimiser la distorsion des différents paramètres. Le point commun entre toutes les projections est qu'elles transforment le monde (sphérique) en un système plat de coordonnées cartésiennes, et le choix de la projection dépend de ce que vous souhaitez faire avec vos données.
+La Terre n'est pas plate et il n'y a pas de moyen simple de la poser à plat sur une carte en papier (ou l'écran d'un ordinateur). Certaines projections préservent les aires, où tous les objets ont des tailles relatives aux autres, d'autre projections conservent les angles (conformes) comme la projection Mercator. Certaines projections tentent de minimiser la distorsion des différents paramètres. Le point commun entre toutes les projections est qu'elles transforment le monde (sphérique) en un système plat de coordonnées cartésiennes, et le choix de la projection dépend de ce que vous souhaitez faire avec vos données.
 
-Nous avons déjà recontrer des projections, lorsque nous avons charger les données de la ville de Ney York .Rappelez-vous qu'elles utilisaient le SRID 26918. Parfois, vous aurez malgré tout besoin de transformer et de reprojeter vos données d'un système de projection à un autre, en utilisant la fonction  :command:`ST_Transform(geometry, srid)`. Pour manipuler les identifiant de systèmes de références spatiales à partir d'une géométrie, PostGIS fournit les fonctions :command:`ST_SRID(geometry)` et :command:`ST_SetSRID(geometry, srid)`.
+Nous avons déjà recontré des projections, lorsque nous avons chargé les données de la ville de Ney York .Rappelez-vous qu'elles utilisaient le SRID 26918. Parfois, vous aurez malgré tout besoin de transformer et de reprojeter vos données d'un système de projection à un autre, en utilisant la fonction  :command:`ST_Transform(geometry, srid)`. Pour manipuler les identifiants de systèmes de références spatiales à partir d'une géométrie, PostGIS fournit les fonctions :command:`ST_SRID(geometry)` et :command:`ST_SetSRID(geometry, srid)`.
 
 Nous pouvons vérifier le SRID de nos données avec la commande :command:`ST_SRID` :
 
@@ -38,9 +38,9 @@ En pratique, les deux colonnes ``srtext`` et ``proj4text`` sont importantes : la
 Comparaison de données
 ----------------------
 
-Combinés, une coordonnée et un SRID définissent une position sur le globe. Sans le SRID, une coordonnée est juste une notion abstraite. Un système de coordonnées "cartésiennes" est définit comme un système de coordonnées "plat" sur la surface de la Terre. Puisque les fonctions de PostGIS utilisent cette surface plane, les opérations de comparaison nécessitent que l'ensemble des objets géométriques soient représentés dans le même système, ayant le même SRID.
+Combinés, une coordonnée et un SRID définissent une position sur le globe. Sans le SRID, une coordonnée est juste une notion abstraite. Un système de coordonnées "cartésiennes" est défini comme un système de coordonnées "plat" sur la surface de la Terre. Puisque les fonctions de PostGIS utilisent cette surface plane, les opérations de comparaison nécessitent que l'ensemble des objets géométriques soient représentés dans le même système, ayant le même SRID.
 
-Si vous utilisé des géométries avec différents SRID vous obtiendrez une erreur comme celle-ci :
+Si vous utilisez des géométries avec différents SRID vous obtiendrez une erreur comme celle-ci :
 
 .. code-block:: sql
 
@@ -57,13 +57,13 @@ Si vous utilisé des géométries avec différents SRID vous obtiendrez une erre
 
 .. note::
 
-   Faites attention de pas utiliser la transformation à la volée à l'aide de :command:`ST_Transform` trop souvent. Les indexes spatiaux sont construits en utilisant le SRID inclu dans les géométries. Si la comparaison est faite avec un SRID différent, les indexes spatiaux ne seront pas (la plupart du temps) utilisés. Il est reconnu qu'il vaut mieux choisir **un SRID** pour toutes les tables de votre base de données. N'utilisez la fonction de tranformation que lorsque vous lisez ou écrivez les données depuis une application externe.
+   Faites attention de ne pas utiliser la transformation à la volée à l'aide de :command:`ST_Transform` trop souvent. Les indexes spatiaux sont construits en utilisant le SRID inclus dans les géométries. Si la comparaison est faite avec un SRID différent, les indexes spatiaux ne seront pas (la plupart du temps) utilisés. Il est reconnu qu'il vaut mieux choisir **un SRID** pour toutes les tables de votre base de données. N'utilisez la fonction de tranformation que lorsque vous lisez ou écrivez les données depuis une application externe.
 
 
 Transformer les données
 -----------------------
 
-Si vous retournez à la définition au format proj4 du SRID 26918, vous pouvez voir que notre projectioin actuelle est de type UTM zone 18 (Universal Transvers Mercator), avec le mètre comme unité de mesure.
+Si vous retournez à la définition au format proj4 du SRID 26918, vous pouvez voir que notre projection actuelle est de type UTM zone 18 (Universal Transvers Mercator), avec le mètre comme unité de mesure.
 
 ::
 
@@ -143,6 +143,6 @@ Liste des fonctions
 
 `ST_SetSRID(geometry, srid) <http://postgis.org/docs/ST_SetSRID.html>`_: affecte une valeur au SRID d'une géométrie.
 
-`ST_SRID(geometry) <http://postgis.org/docs/ST_SRID.html>`_: retourne l'indentifiant du système de références spatialesd'un objet ST_Geometry comme définit dans la table spatial_ref_sys.
+`ST_SRID(geometry) <http://postgis.org/docs/ST_SRID.html>`_: retourne l'identifiant du système de références spatiales d'un objet ST_Geometry comme défini dans la table spatial_ref_sys.
 
-`ST_Transform(geometry, srid) <http://postgis.org/docs/ST_Transform.html>`_: retourne une nouvelle géométrie après avoi re-projeté  les données dans le système correspondant au SRID passé en paramètre.
+`ST_Transform(geometry, srid) <http://postgis.org/docs/ST_Transform.html>`_: retourne une nouvelle géométrie après avoir re-projeté les données dans le système correspondant au SRID passé en paramètre.

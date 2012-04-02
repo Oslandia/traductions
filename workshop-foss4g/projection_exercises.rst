@@ -3,7 +3,7 @@
 Partie 16 : Exercices sur les projections
 =========================================
 
-Voici un rappel de certaines fonctions que nous avons vu. Elles seront utiles pour les exercices !
+Voici un rappel de certaines fonctions que nous avons vues. Elles seront utiles pour les exercices !
      
 * :command:`sum(expression)` agrégation qui retourne la somme d'un ensemble de valeurs
 * :command:`ST_Length(linestring)` retourne la longueur d'une ligne
