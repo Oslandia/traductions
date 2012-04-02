@@ -5,15 +5,15 @@ Partie 13 : Exercices sur jointures spatiales
 
 Voici un petit rappel de certaines des fonctions vues précédemment. Elles seront utiles pour les exercices !
 
- * :command:`sum(expression)` agrégation retournant la somme d'un ensemble
- * :command:`count(expression)` agrégation retournant le nombre d'éléments d'un ensemble
-* :command:`ST_Area(geometry)` retourbe l'aire d'un polygone
+ * :command:`sum(expression)` agrégat retournant la somme d'un ensemble
+ * :command:`count(expression)` agrégat retournant le nombre d'éléments d'un ensemble
+* :command:`ST_Area(geometry)` retourne l'aire d'un polygone
 * :command:`ST_AsText(geometry)` returns WKT ``text``
 * :command:`ST_Contains(geometry A, geometry B)` retourne vrai si la géométrie A contient la géométrie B 
 * :command:`ST_Distance(geometry A, geometry B)` retourne la distance minimum entre deux géométries
-* :command:`ST_DWithin(geometry A, geometry B, radius)` retourne vrai si la A est distante d'au plus radius de B
+* :command:`ST_DWithin(geometry A, geometry B, radius)` retourne vrai si A est distante d'au plus radius de B
 * :command:`ST_GeomFromText(text)` returns ``geometry``
-* :command:`ST_Intersects(geometry A, geometry B)` returns the true if geometry A intersects geometry B
+* :command:`ST_Intersects(geometry A, geometry B)` retourne vrai si A a une intersection avec B
 * :command:`ST_Length(linestring)` retourne la longueur d'une linestring
 * :command:`ST_Touches(geometry A, geometry B)` retourne vrai si le contour extérieur de A touche B
 * :command:`ST_Within(geometry A, geometry B)` retourne vrai si A est hors de B
@@ -39,7 +39,7 @@ Souvenez-vous aussi des tables à votre disposition :
 Exercices
 ---------
 
- * **"Quelle station de métros se situe dans le quartier 'Little Italy' ? Quelle est l'itinéraire de métro à emprunter ?"**
+ * **"Quelle station de métro se situe dans le quartier 'Little Italy' ? Quelle est l'itinéraire de métro à emprunter ?"**
  
    .. code-block:: sql
  
