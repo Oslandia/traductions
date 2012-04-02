@@ -12,7 +12,7 @@ Pour visualiser la nature de vos tables depuis pgAdmin, cliquez avec le bouton d
 nyc_census_blocks
 -----------------
 
-Un bloc ressencé est la plus petite entité géographique pour laquelle un ressencement est raporté. Toutes les couches représentant les niveaux suppérieurs (régions, zones de métro, comtés) peuvent être contruites à partir de ces blocs. Nous avons attaché des données démographiques aux blocs.
+Un bloc recencé est la plus petite entité géographique pour laquelle un recencement est raporté. Toutes les couches représentant les niveaux supérieurs (régions, zones de métro, comtés) peuvent être contruites à partir de ces blocs. Nous avons attaché des données démographiques aux blocs.
 
 Nombre d'enregistrements : 36592
 
