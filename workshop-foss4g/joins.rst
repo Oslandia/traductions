@@ -5,7 +5,7 @@ Partie 12 : Les jointures spatiales
 
 Les jointures spatiales sont la cerise sur le gâteau des base de données spatiales. Elles vous pemettent de combiner les informations de plusieures tables en utilisant une relation spatiale comme clause de jointure. La plupart des "analyses SIG standards" peuvent être exprimées à l'aide de jointure spatiales.
 
-Dans la partie précédente, nous avons utilisé les relations spatiales en utilisant deux étapes dans nos requêtes : nous avons dans un premier temps extrait la station de métro "Broad St" puis nous avons utilisé ce résultat dans nos autres requêtes pour répondre aux questions comme "dans quel quartier se situe la station 'Broad St' ?"
+Dans la partie précédente, nous avons utilisé les relations spatiales en deux étapes dans nos requêtes : nous avons dans un premier temps extrait la station de métro "Broad St" puis nous avons utilisé ce résultat dans nos autres requêtes pour répondre aux questions comme "dans quel quartier se situe la station 'Broad St' ?"
 
 En utilisant les jointures spatiales, nous pouvons répondre aux questions en une seule étape, récupérant les informations relatives à la station de métro et le quartier la contenant : 
 
@@ -26,14 +26,14 @@ En utilisant les jointures spatiales, nous pouvons répondre aux questions en un
   -------------+--------------------+-----------
    Broad St    | Financial District | Manhattan
 
-Nous avons pu regrouper chaque station de métro avec le quartier auquel elle appartient, mais dans ce cas nous n'en voulions qu'une. Chaque fonction qui envoit un résultat du type vrai/faux peut être utilisée pour joindre spatialement deux tables, mais la plupart du temps on utilise : :command:`ST_Intersects`, :command:`ST_Contains`, et :command:`ST_DWithin`.
+Nous avons pu regrouper chaque station de métro avec le quartier auquel elle appartient, mais dans ce cas nous n'en voulions qu'une. Chaque fonction qui envoie un résultat du type vrai/faux peut être utilisée pour joindre spatialement deux tables, mais la plupart du temps on utilise : :command:`ST_Intersects`, :command:`ST_Contains`, et :command:`ST_DWithin`.
 
 Jointure et regroupement
 ------------------------
 
 La combinaison de ``JOIN`` avec ``GROUP BY`` fournit le type d'analyse qui est couramment utilisé dans les systèmes SIG.
 
-Par exemple : **Quelle est la population et la répartition raciale du quartier de Manhattan ?** Ici nous avons une question qui combine les informations relatives à la population recensée et les contours des quartiers, or nous ne voulons qu'un seul quartier, celui de Manhattan.
+Par exemple : **Quelle est la population et la répartition ethnique du quartier de Manhattan ?** Ici nous avons une question qui combine les informations relatives à la population recensée et les contours des quartiers, or nous ne voulons qu'un seul quartier, celui de Manhattan.
 
 .. code-block:: sql
 
@@ -83,20 +83,20 @@ Par exemple : **Quelle est la population et la répartition raciale du quartier 
   Harlem              |     125501 |       5.7 |      80.5
 
 
-Que ce passe-t-il ici ?  Voici ce qui se passe (l'ordre d'évaluation est optimisé par la base de données) :
+Que se passe-t-il ici ?  Voici ce qui se passe (l'ordre d'évaluation est optimisé par la base de données) :
 
 #. La clause ``JOIN`` crée une table virtuelle qui contient les colonnes à la fois des quartiers et des recensements (tables neighborhoods et census).
 #. La clause ``WHERE`` filtre la table virtuelle pour ne conserver que la ligne correspondant à Manhattan. 
-#. Les lignes restantes sont regroupées par le nom du quartier et sont utilisées par la fonction d'agrégation : :command:`Sum()` pour réaliser la somme des valeurs de la populations.
-#. Après un peu d'arythmétique et de formatage (ex: ``GROUP BY``, ``ORDER BY``)) sur le nombres finaux, notre requête calcul les pourcentages.
+#. Les lignes restantes sont regroupées par le nom du quartier et sont utilisées par la fonction agrégat : :command:`Sum()` pour réaliser la somme des valeurs de la population.
+#. Après un peu d'arithmétique et de formatage (ex: ``GROUP BY``, ``ORDER BY``)) sur les nombres finaux, notre requête calcule les pourcentages.
 
 .. note:: 
 
    La clause ``JOIN`` combine deux parties ``FROM``.  Par défaut, nous utilisons un jointure du type :``INNER JOIN``, mais il existe quatres autres types de jointures. Pour de plus amples informations à ce sujet, consultez la partie `type_jointure <http://docs.postgresql.fr/9.1/sql-select.html>`_ de la page de la documentation officielle de PostgreSQL.
 
-Nous pouvons aussi utiliser le test de la distance dans notre clef de jointure, pour créer une regroupement de "tout les éléments dans un certain rayon". Essayons d'analyser la géographie raciale de New York en utilisant les requêtes de distance.
+Nous pouvons aussi utiliser le test de la distance dans notre clef de jointure, pour créer une regroupement de "tout les éléments dans un certain rayon". Essayons d'analyser la géographie ethnique de New York en utilisant les requêtes de distance.
 
-Premièrement, essayons d'obtenir la répartition raciale de la ville.
+Premièrement, tentons d'obtenir la répartition ethnique de la ville.
 
 .. code-block:: sql
 
@@ -157,7 +157,7 @@ Donc pour trouver le train A, nous allons demander toutes les lignes ayant pour 
   A,B,C,D
   A,C,E
   
-Essayons de regrouper la répartition raciale dans un rayon de 200 mètres de la ligne du train A.
+Essayons de regrouper la répartition ethnique dans un rayon de 200 mètres de la ligne du train A.
 
 .. code-block:: sql
 
@@ -176,14 +176,14 @@ Essayons de regrouper la répartition raciale dans un rayon de 200 mètres de la
   ---------------------+---------------------+------------
    42.0805466940877366 | 23.0936148851067964 |     185259
 
-La répartition raciale le long de la ligne du train A n'est pas radicallement différente de la répartition générale de la ville de New York.
+La répartition ethnique le long de la ligne du train A n'est pas radicalement différente de la répartition générale de la ville de New York.
 
 Jointures avancées
 ------------------
 
-Dans la dernière partie nous avons vu que le train A n'est pas utilisé par des populations si éloignées de la répartition totale du reste de la ville. Y-a-t-il des train qui passent par des parties de la ville qui ne sont pas dans la moyenne de la répartition raciale ?
+Dans la dernière partie nous avons vu que le train A n'est pas utilisé par des populations si éloignées de la répartition totale du reste de la ville. Y-a-t-il des trains qui passent par des parties de la ville qui ne sont pas dans la moyenne de la répartition ethnique ?
 
-Pour répondre à cette question, nous ajouterons une nouvelle jointure à notre requête, de telle manière que nous puissions calculer simultanément la répartition raciale de plusieures lignes de métro à la fois. Pour faire ceci, nous créerons une table qui permettra d'énumérer toutes les lignes que nous voulons regrouper.
+Pour répondre à cette question, nous ajouterons une nouvelle jointure à notre requête, de telle manière que nous puissions calculer simultanément la répartition ethnique de plusieures lignes de métro à la fois. Pour faire ceci, nous créerons une table qui permettra d'énumérer toutes les lignes que nous voulons regrouper.
 
 .. code-block:: sql
 
@@ -238,7 +238,7 @@ Maintenant nous pouvons joindre les tables des lignes de métros à notre requê
      7     |      42.4 |       3.8 |     107543
 
 
-Comme précédemment, les jointures créent une table virtuelle de toutes les combinaisons possibles et disponibles à l'aide des contraintes de type ``JOIN ON`. Ces lignes sont ensuite utilisées dans le regroupement ``GROUP``. La magie spatiale tiend dans l'utilisation de la fonction ``ST_DWithin`` qui s'assure que les blocs sont suffisamment proches des lignes de métros inclues dans le calcul.
+Comme précédemment, les jointures créent une table virtuelle de toutes les combinaisons possibles et disponibles à l'aide des contraintes de type ``JOIN ON`. Ces lignes sont ensuite utilisées dans le regroupement ``GROUP``. La magie spatiale tient dans l'utilisation de la fonction ``ST_DWithin`` qui s'assure que les blocs sont suffisamment proches des lignes de métros incluses dans le calcul.
 
 Liste de fonctions
 ------------------
@@ -247,7 +247,7 @@ Liste de fonctions
 
 `ST_DWithin(geometry A, geometry B, radius) <http://postgis.org/docs/ST_DWithin.html>`_: retourne TRUE si les géométries sont distantes du rayon donné. 
 
-`ST_Intersects(geometry A, geometry B) <http://postgis.org/docs/ST_Intersects.html>`_: retourne TRUE si les géométries/géographies "s'intersectent spatialement" (partage une portiond de l'espace) et FALSE sinon (elles sont dijointes). 
+`ST_Intersects(geometry A, geometry B) <http://postgis.org/docs/ST_Intersects.html>`_: retourne TRUE si les géométries/géographies "s'intersectent spatialement" (partagent une portion de l'espace) et FALSE sinon (elles sont dijointes). 
 
 `round(v numeric, s integer) <http://www.postgresql.org/docs/7.4/interactive/functions-math.html>`_: fonction de PostgreSQL qui arrondit à s décimales.
 
