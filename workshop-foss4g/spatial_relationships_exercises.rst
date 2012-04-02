@@ -1,9 +1,9 @@
 .. _spatial_relationships_exercises:
 
-Partie 11 : Exercises sur les relations spatiales
-===========================================
+Partie 11 : Exercices sur les relations spatiales
+=================================================
 
-Voici un rappel des fonctions que nous avons vu dans les parties précédentes. Elles seront utiles pour les exercices !
+Voici un rappel des fonctions que nous avons vues dans les parties précédentes. Elles seront utiles pour les exercices !
 
  * :command:`sum(expression)` agrégation retournant la somme d'un ensemble
  * :command:`count(expression)` agrégation retournant le nombre d'éléments d'un ensemble
@@ -51,7 +51,7 @@ Exercices
    
      01050000202669000001000000010200000002000000093235673BE82141F319CD89A22E514170E30E0ADFE82141CB2D3EFFA52E5141
      
- * **"Quel sont les quartiers et villes qui sont dans Atlantic Commons ?"**
+ * **"Quel sont les quartiers et villes traversés par Atlantic Commons ?"**
      
    .. code-block:: sql
 
