@@ -94,12 +94,11 @@ Dans l'exemple précédent nous intersections des géométries, créant une nouv
 
 :
 
- * :command:`ST_Union([geometry])`: une version agrégat qui prend un ensemble de géométries et retourne une géométrie contenant l'ensemble des géométries rassemblées. La fonction agrégat ST_Union peut être utilisé grâce au SQL ``GROUP BY`` our créer un ensemble rassemblant des sous-ensembles de géométries basiques. Cela est très puissant,
+ * :command:`ST_Union([geometry])`: une version agrégat qui prend un ensemble de géométries et retourne une géométrie contenant l'ensemble des géométries rassemblées. La fonction agrégat ST_Union peut être utilisé grâce au SQL ``GROUP BY`` pour créer un ensemble rassemblant des sous-ensembles de géométries basiques. Cela est très puissant,
 
-Par exemple avec la fonction d'agrégation  :command:`ST_Union`, considèrons notre table ``nyc_census_blocks``. 
-As an example of :command:`ST_Union` aggregation, consider our ``nyc_census_blocks`` table. Census geography is carefully constructed so that larger geographies can be built up from smaller ones. So, we can create a census tracts map by merging the blocks that form each tract (as we do later in :ref:`creatingtractstable`). Or, we can create a county map by merging blocks that fall within each county.
+Par exemple avec la fonction d'agrégation  :command:`ST_Union`, considèrons notre table ``nyc_census_blocks``.  La table de géographique du recensement est construite avec attention, afin de pouvoir reconstruire les entités de niveau supérieur à partir des entités de base. Ainsi, nous pouvons créer des cartes de reconsement en regroupant les blocs pour chaque zone de recensement (comme cela est fait ensuite dans :ref:`creatingtractstable`). Ou alors nous pouvons créer une carte des cantons en faisant l'union des blocs qui les composent.
 
-To carry out the merge, note that the unique key ``blkid`` actually embeds information about the higher level geographies. Here are the parts of the key for Liberty Island we used earlier:
+Pour créer cette fusion, il faut remarquer que la clé unique ``blkid``  contient en fait des informations sur les niveaux géographiques. Voice les parties de l'identifiant pour Liberty Island, que nous avons utilisées plus tôt:
 
 ::
 
@@ -111,11 +110,11 @@ To carry out the merge, note that the unique key ``blkid`` actually embeds infor
   9      = Census Block Group
   000    = Census Block
   
-So, we can create a county map by merging all geometries that share the same first 5 digits of their ``blkid``.
+Ainsi, nous pouvons créer une carte des cantons en fusionnant toutes les géométries qui partagent les 5 même premiers chiffres de leur clé ``blkid``.
 
 .. code-block:: sql
 
-  -- Création d'une table nyc_census_counties en regroupant les bloques
+  -- Création d'une table nyc_census_counties en regroupant les blocs
   CREATE TABLE nyc_census_counties AS
   SELECT 
     ST_Union(the_geom) AS the_geom, 
@@ -128,7 +127,7 @@ So, we can create a county map by merging all geometries that share the same fir
   
 .. image:: ./geometry_returning/union_counties.png
 
-An area test can confirm that our union operation did not lose any geometry. First, we calculate the area of each individual census block, and sum those areas grouping by census county id.
+Un test d'aire confirme que notre opération d'union ne nous a fait perdre aucune géométrie. Premièrement, nous calculons l'aire de chaque bloc de recensement, et ous faisons la somme de ces surfaces en les regroupant par identifiant de canton de recensement.
 
 .. code-block:: sql
 
@@ -170,12 +169,12 @@ Liste des fonctions
 
 `ST_AsText(text) <http://postgis.org/docs/ST_AsText.html>`_: retourne la représentation Well-Known Text (WKT) de la geometry/geography sans métadonnée SRID.
 
-`ST_Buffer(geometry, distance) <http://postgis.org/docs/ST_Buffer.html>`_: For geometry: Returns a geometry that represents all points whose distance from this Geometry is less than or equal to distance. Calculations are in the Spatial Reference System of this Geometry. For geography: Uses a planar transform wrapper. 
+`ST_Buffer(geometry, distance) <http://postgis.org/docs/ST_Buffer.html>`_: Retourne une géométrie qui représente tous les points dont la distance à partir de la géométrie d'origine est inférieure ou égale à la distance donnée. Les calculs sont fait dans le système de coordonnées de référence.
 
-`ST_Intersection(geometry A, geometry B) <http://postgis.org/docs/ST_Intersection.html>`_: Returns a geometry that represents the shared portion of geomA and geomB. The geography implementation does a transform to geometry to do the intersection and then transform back to WGS84.
+`ST_Intersection(geometry A, geometry B) <http://postgis.org/docs/ST_Intersection.html>`_: Retourne une géométrie qui représente la partie en commun de la géométrie A et de la géométrie B. 
 
-`ST_Union() <http://postgis.org/docs/ST_Union.html>`_: Returns a geometry that represents the point set union of the Geometries.
+`ST_Union() <http://postgis.org/docs/ST_Union.html>`_: Retourne une géométrie qui représente l'union de l'ensemble des points des géométries.
 
-`substring(string [from int] [for int]) <http://www.postgresql.org/docs/8.1/static/functions-string.html>`_: PostgreSQL string function to extract substring matching SQL regular expression.
+`substring(string [from int] [for int]) <http://www.postgresql.org/docs/8.1/static/functions-string.html>`_: Fonction PostgreSQL qui extrait la sous chaine correspondant aux critères donnés.
 
-`sum(expression) <http://www.postgresql.org/docs/8.2/static/functions-aggregate.html#FUNCTIONS-AGGREGATE-TABLE>`_: PostgreSQL aggregate function that returns the sum of records in a set of records.
+`sum(expression) <http://www.postgresql.org/docs/8.2/static/functions-aggregate.html#FUNCTIONS-AGGREGATE-TABLE>`_: Fonction agrégat PostgreSQL qui retourne la somme des valeurs d'un champ pour le groupe. 
