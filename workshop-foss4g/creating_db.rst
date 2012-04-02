@@ -30,7 +30,7 @@ Créer une base de données
 
 PostgreSQL fournit ce que l'on appèle des modèles de bases de données qui peuvent être utilisés lors de la création d'une nouvelle base. Cette nouvelle base contiendra alors une copie de tout ce qui est présent dans le modèle. Lorsque vous installez PostGIS, une base de données appelée ``template_postgis`` a été crée. Si nous utilisons ``template_postgis`` comme modèle lors de la création de notre nouvelle base, la nouvelle base sera une base de données spatiales.
 
-#. Ouvrez l'arbre des bases de données et regardez quelles sont les bases de données disponibles. La base ``postgres`` est la base de l'utilisateur (par défaut l'utilisateur postgres, donc pas très interressante pour nous). La base ``template_postgis`` est celle que nous utiliserons pour créer des bases de données spatiales.
+#. Ouvrez l'arbre des bases de données et regardez quelles sont les bases de données disponibles. La base ``postgres`` est la base de l'utilisateur (par défaut l'utilisateur postgres, donc pas très intéressante pour nous). La base ``template_postgis`` est celle que nous utiliserons pour créer des bases de données spatiales.
 
 #. Cliquez avec le clic droit sur l'élément ``Databases`` et selectionnez ``New Database``.
 

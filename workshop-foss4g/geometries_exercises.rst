@@ -148,7 +148,7 @@ Exercices
           [583276.81990686338,4509378.825446927], ...
           [583263.2776595836,4509242.6260239873]]]]}
 
-La géométrie de type "MultiPolygon", interressant !
+La géométrie de type "MultiPolygon", intéressant !
    
       
  * **"Combien de polygones sont dans le multi-polygone 'West Village' ?"**

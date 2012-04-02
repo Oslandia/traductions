@@ -137,7 +137,7 @@ Comme le nombre de fonctions augmentait, le besoin d'un principe d'organisation 
 Avec le support dans PostGIS de simples fonctions d'analyses et de jointures spatiales, 
 `Mapserver <http://mapserver.org/>`_ devint la première application externe permettant de visualiser les données de la base de données.
 
-Au cours de ces dernières années le nombre de fonctions fournies par PostGIS grandit, mais sa puissance restait limité. La plupart des fonctions interressantes (ex : ST_Intersects(), ST_Buffer(), ST_Union()) étaient difficiles à implémenter. Les écrire en repartant du début promettait des années de travail.
+Au cours de ces dernières années le nombre de fonctions fournies par PostGIS grandit, mais sa puissance restait limité. La plupart des fonctions intéressantes (ex : ST_Intersects(), ST_Buffer(), ST_Union()) étaient difficiles à implémenter. Les écrire en repartant du début promettait des années de travail.
 
 Heureusement un second projet, nommé "Geometry Engine, Open Source" ou `GEOS <http://trac.osgeo.org/geos>`_ vit le jour. Cette librairie fournit l'ensemble des algorithmes nécessaires à l'implémentation de la spécification :term:`SFSQL` . En se liant à GEOS, PostGIS fournit alors le support complet de la :term:`SFSQL` depuis la version 0.8.
 
