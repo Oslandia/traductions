@@ -6,7 +6,7 @@ Partie 8 : Les géometries
 Introduction
 ------------
 
-Dans :ref:`une partie précédente<loading_data>` nous avons charger différentes données. Avant de commencer à jouer avec, commençons par regarder quelques exemples simples. Depuis pgAdmin, choisissez de nouveau la base de donnée **nyc** et ouvrez l'outil de requêtage SQL. Copiez cette exemple de code SQL (après avoir supprimer le contenu présent par défaut si nécessaire) puis exécutez-le.
+Dans :ref:`une partie précédente<loading_data>` nous avons chargé différentes données. Avant de commencer à jouer avec, commençons par regarder quelques exemples simples. Depuis pgAdmin, choisissez de nouveau la base de donnée **nyc** et ouvrez l'outil de requêtage SQL. Copiez cette exemple de code SQL (après avoir supprimé le contenu présent par défaut si nécessaire) puis exécutez-le.
 
 .. code-block:: sql
 
@@ -25,7 +25,7 @@ Dans :ref:`une partie précédente<loading_data>` nous avons charger différente
 
 .. image:: ./geometries/start01.png
 
-L'exemple ci-dessus créé une table (**geometries**) puis y insert cinq géométries : un point, une ligne, un polygone, un polygone avec un trou, et une collection. Les lignes insérées sont sélectionnées et affichées dans le tableau de sortie.
+L'exemple ci-dessus crée une table (**geometries**) puis y insert cinq géométries : un point, une ligne, un polygone, un polygone avec un trou, et une collection. Les lignes insérées sont sélectionnées et affichées dans le tableau de sortie.
 
 Les tables de métadonnées
 -------------------------
@@ -33,11 +33,11 @@ Les tables de métadonnées
 Dans le respect de la spécification Simple Features for SQL (:term:`SFSQL`), PostGIS fournit deux tables pour récupérer et s'informer sur les types de géométries disponibles dans une base de données spécifique.
 
 * La première table, ``spatial_ref_sys``, définit tout les systèmes de projection connus de la base de données et sera décrite plus en détails plus tard.  
-* La seconde table, ``geometry_columns``, fournit une liste de toutes les "entités" (définit comme un objet avec un attribut géométrique) et les détails de base relatives à ces entités. 
+* La seconde table, ``geometry_columns``, fournit une liste de toutes les "entités" (défini comme un objet avec un attribut géométrique) et les détails de base relatifs à ces entités. 
 
 .. image:: ./geometries/table01.png
 
-Dans l'exemple founit en introduction, la fonction :command:`Populate_Geometry_Columns()` détecte toute les colonnes de la base de données qui contiennent des géométries et met à jour la table ``geometry_columns`` pour y inclure leurs références.
+Dans l'exemple founi en introduction, la fonction :command:`Populate_Geometry_Columns()` détecte toute les colonnes de la base de données qui contiennent des géométries et met à jour la table ``geometry_columns`` pour y inclure leurs références.
 
 Regardons maintenant la table ``geometry_columns`` de notre base de données. Copiez cette commande dans la fenêtre de requêtage :
 
@@ -48,7 +48,7 @@ Regardons maintenant la table ``geometry_columns`` de notre base de données. Co
 
 .. image:: ./geometries/start08.png
 
-* ``f_table_catalog``, ``f_table_schema``, et ``f_table_name`` fournissent le nom complet de la table contenant une géométrie donnée. Étant donné que PostgreSQL n'utilise pas de catalogues, ``f_table_catalog`` est toujouts vide.  
+* ``f_table_catalog``, ``f_table_schema``, et ``f_table_name`` fournissent le nom complet de la table contenant une géométrie donnée. Étant donné que PostgreSQL n'utilise pas de catalogues, ``f_table_catalog`` est toujours vide.  
 * ``f_geometry_column`` est le nom de la colonne qui contient la géométrie -- pour les tables ayant plusieurs colonnes géométriques, il y a un enregistrement dans cette table pour chacune.
 * ``coord_dimension`` et ``srid`` définissent respectivement la dimension de la géométrie (en 2-, 3- or 4-dimensions) et le système de références spatiales qui fait référence à la table ``spatial_ref_sys``.  
 * La colonne ``type`` définit le type de géométrie comme décrit plus tôt, nous avons déjà vu les points et les lignes.  
@@ -58,7 +58,7 @@ En interrogeant cette table, les clients SIG et les libraires peuvent détermine
 Réprésenter des objets du monde réel
 -----------------------------------
 
-La spécification Simple Features for SQL (:term:`SFSQL`), le standard ayant guidé le développement de PostGIS, définit comment les objets du monde réel doivent être représentés. En considérant une forme continue à une seule résolution fixe, nous obtenons une piètre représentation des objets. SFSQL considère uniquement les représentations en 2 dimensions. PostGIS a étendu cela en ajoutant les représentation en 3 et 4 dimensions. Plus récemment, la spécification SQL-Multimedia Part 3 (:term:`SQL/MM`) a officiellement définit sa propre représentation.
+La spécification Simple Features for SQL (:term:`SFSQL`), le standard ayant guidé le développement de PostGIS, définit comment les objets du monde réel doivent être représentés. En considérant une forme continue à une seule résolution fixe, nous obtenons une piètre représentation des objets. SFSQL considère uniquement les représentations en 2 dimensions. PostGIS a étendu cela en ajoutant les représentation en 3 et 4 dimensions. Plus récemment, la spécification SQL-Multimedia Part 3 (:term:`SQL/MM`) a officiellement défini sa propre représentation.
 
 Notre table exemple contient différents types de géométries. Nous pouvons récupérer les informations de chaque objet en utilisant les fonctions qui lisent les métadonnées de la géométrie.
 
@@ -220,7 +220,7 @@ Nous pouvons calculer l'aire de nos polygones en utilisant la fonction area :
 Remarquez que le polygone contenant un trou a une aire égale à l'aire du contour externe (un carré de 10 sur 10) moins l'aire du trou (un carré de 1 sur 1).
 
 Les collections
-~~~~~~~~~~~~~~~~ 
+~~~~~~~~~~~~~~~ 
 
 Il y a quatre types de collections, qui regroupe ensemble plusieurs géométries simples.
 
@@ -254,8 +254,8 @@ Certaines des fonctions spatiales spécifiques à la manipulation des collection
  * :command:`ST_Area(geometry)` retourne l'aire totale des composantes de types polygones
  * :command:`ST_Length(geometry)` retourne la longueur totale des composantes de types lignes
 
-Entré / Sortie des géométries
------------------------------
+Entrée / Sortie des géométries
+------------------------------
 
 Dans la base de données, les géométries sont stockées dans un format utilisé uniquement par le programme PostGIS. Afin que des programmes externes puissent insérer et récupérer les données utiles, elles ont besoin d'être converties dans un format compris par l'application. Heureusement, PostGIS supporte un grand nombre de formats en entrée et en sortie :
 
