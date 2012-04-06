@@ -2,7 +2,7 @@
 Plus courts chemins
 ==============================================================================================================
 
-pgRouting été initialement appelé *pgDijkstra*, puisque il implémentait seulement la recherche de plus court chemin à l'aide de l'agorithme de *Dijkstra*. Plus tard, d'uatres fonctions se sont ajoutées et la bibliotèque fut renommée.
+pgRouting été initialement appelé *pgDijkstra*, puisqu'il implémentait seulement la recherche de plus court chemin à l'aide de l'agorithme de *Dijkstra*. Plus tard, d'uatres fonctions se sont ajoutées et la bibliothèque fut renommée.
 
 .. image:: images/route.png
 	:width: 250pt
@@ -13,18 +13,18 @@ Ce chapitre explique les trois différents algorithmes et les attributs nécessa
 
 .. note::
 
-	Si vous lancez l'outils :doc:`osm2pgrouting <osm2pgrouting>` pour importer des données *OpenStreetMap*, la table des chemins (``ways``) contient déjà tout les attributs nécessaires pour utiliser les fonctions de recherche de plus court chemins. Au contraire, la table ``ways`` de la base de données ``pgrouting-workshop`` du :doc:`chapitre précédent <topology>` manque d'un certain nombre d'attributs, qui sont présentés dans ce chapitre dans les **Prérequis**.
+	Si vous lancez l'outil :doc:`osm2pgrouting <osm2pgrouting>` pour importer des données *OpenStreetMap*, la table des chemins (``ways``) contient déjà tous les attributs nécessaires pour utiliser les fonctions de recherche de plus court chemin. Au contraire, la table ``ways`` de la base de données ``pgrouting-workshop`` du :doc:`chapitre précédent <topology>` manque d'un certain nombre d'attributs, qui sont présentés dans ce chapitre dans les **Prérequis**.
 
 
 -------------------------------------------------------------------------------------------------------------
 Dijkstra
 -------------------------------------------------------------------------------------------------------------
 
-L'algorithme de Dijkstraa été la première implémentation disponible dans pgRouting. Il ne nécessite pas d'autre attributs que les champs ``source`` et ``target``, les attributs ``id`` et ``cost``. Il peut être utilisé sur des graphes orientés ou non. Vous pouvez spécifier que votre réseau à un coût de ``parcours inverse`` (``reverse cost``) ou non.
+L'algorithme de Dijkstra était la première implémentation disponible dans pgRouting. Il ne nécessite pas d'autre attribut que les champs ``source`` et ``target``, les attributs ``id`` et ``cost``. Il peut être utilisé sur des graphes orientés ou non. Vous pouvez spécifier que votre réseau à un coût de ``parcours inverse`` (``reverse cost``) ou non.
 
 .. rubric:: Prérequis
 
-Pour être en mesure d'utiliser un coût de parcuors invers, vous devez ajouter une colonne de coût. Nous pouvons affecter la longuer au coût de parcours inverse.
+Pour être en mesure d'utiliser un coût de parcours inverse, vous devez ajouter une colonne de coût. Nous pouvons affecter la longueur au coût de parcours inverse.
 
 .. code-block:: sql
 
@@ -43,7 +43,7 @@ Pour être en mesure d'utiliser un coût de parcuors invers, vous devez ajouter 
 
 .. note::
 
-	* Les identifiant pour source et target sont les identifiant des noeuds.
+	* Les identifiants pour source et target sont les identifiants des noeuds.
 	* Graphes non-orientés ("directed=false") implique que le paramètre "has_reverse_cost" est ignoré
 
 
@@ -76,12 +76,12 @@ Chaque algorithme a une fonction de *base*.
 
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Enveloppe
+Enveloppes (wrappers)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. rubric:: Enveloppe SANS limite d'étendue
 
-les fonctions enveloppes sont des fonctions qui étendent les fonctions de bases en y ajoutant des transformations, ajoutant des limites de l'étendue géograhpique de la recherhe, etc.. Les enveloppes peuvent changer le format et l'ordre des résultats. Il affectent aussi automatiquement certains paramètre et rend l'utilisation de pgRouting encore plsu simple.
+les fonctions enveloppes sont des fonctions qui étendent les fonctions de base en y ajoutant des transformations, des limites de l'étendue géograhpique de la recherche, etc.. Les enveloppes peuvent changer le format et l'ordre des résultats. Il affectent aussi automatiquement certains paramètres et rendent l'utilisation de pgRouting encore plus simple.
 
 .. code-block:: sql
 
@@ -140,7 +140,7 @@ Vous pouvez limiter votre recherche à une zone précise en ajoutant un cadre li
 A-Étoile
 -------------------------------------------------------------------------------------------------------------
 
-L'algortihme A-Étoile est un autre algrithme bien connu. Il ajoute l'information de la position géographique du début et la fin de chaque tronçon. Cela permet une recherche privilégiant les tronçons proches du point d'arrivée de la recherche.
+L'algorithme A-Étoile est un autre algorithme bien connu. Il ajoute l'information de la position géographique du début et la fin de chaque tronçon. Cela permet une recherche privilégiant les tronçons proches du point d'arrivée de la recherche.
 
 .. rubric:: Prérequis
 
@@ -245,11 +245,11 @@ Enveloppe
 Shooting-Star
 -------------------------------------------------------------------------------------------------------------
 
-L'algorithme Shooting-Star est le dernier algorithme de recherche de plus court chemin. Sa spécialité c'est qu'il recherche un parcours d'un tronçon à un autre, pas d'un sommet à un sommet comme les agorithmes de Dijkstra et A-Star le font. Cela rend possible la définition de relations entre les tronçons par exemple, et cela résoud certains problèmes liés aux recherches d'un sommets à un autre comme les "tronçons parallèles", qui ont les même sommet de début et de fin mais des coût différents.
+L'algorithme Shooting-Star est le dernier algorithme de recherche de plus court chemin. Sa spécificité est de rechercher un parcours d'un tronçon à un autre, pas d'un sommet à un sommet comme les algorithmes de Dijkstra et A-Star le font. Cela rend possible la définition de relations entre les tronçons par exemple, et cela résoud certains problèmes liés aux recherches d'un sommets à un autre comme les "tronçons parallèles", qui ont les même sommet de début et de fin mais des coûts différents.
 
 .. rubric:: Prérequis
 
-Pour Shooting-Star vous avez besoin de préparer votre table de réseau et d'ajouter les colonnes ``rule`` et ``to_cost``. Come l'algorithme A-* il a aussi un fonction heuristique, qui favorise les tronçons plus proche du point d'arrivée.which prefers links closer to the target of the search.
+Pour Shooting-Star vous avez besoin de préparer votre table de réseau et d'ajouter les colonnes ``rule`` et ``to_cost``. Comme l'algorithme A-* il a aussi une fonction heuristique, qui favorise les tronçons plus proche du point d'arrivée.
 
 .. code-block:: sql
 
@@ -263,11 +263,11 @@ Pour Shooting-Star vous avez besoin de préparer votre table de réseau et d'ajo
    :widths: 10 90
 
    * - **Attribut**
-     - **Déscription**
+     - **Description**
    * - rule
-     - une chaine de caractères contenant une liste d'identifiants de tronçno séparés par une virgule, qui décrivent le sens giratoir (si vous venez de cet tronçon, vous pouvez rejoindre le suivant en ajoutant un coût défini dans la colonne to_cost)
+     - une chaine de caractères contenant une liste d'identifiants de tronçon séparés par une virgule, qui décrivent le sens giratoire (si vous venez de cet tronçon, vous pouvez rejoindre le suivant en ajoutant un coût défini dans la colonne to_cost)
    * - to_cost
-     - un coût pour passer d'un tronçon à un autre (peut être très élevé s'il est interdit de trouner vers ce tronçon ce qui est comparable au coût de parcours d'un tronçon en cas de feu de signalisation)
+     - un coût pour passer d'un tronçon à un autre (peut être très élevé s'il est interdit de tourner vers ce tronçon ce qui est comparable au coût de parcours d'un tronçon en cas de feu de signalisation)
 
 .. rubric:: Fonction avec paramètres
 
@@ -302,7 +302,7 @@ Pour décrire une interdiction de tourner :
 
 ... signifie que le coût pour aller du tronçon 14 au tronçon 12 via le tronçon 4 est de 1000.
 
-Si vous avez besoin de plusieurs restrictions pour une arrête donnée you devez ajouter plusieurs enregistrements pour ce tronçon avec un restriction particulière.
+Si vous avez besoin de plusieurs restrictions pour une arrête donnée vous devez ajouter plusieurs enregistrements pour ce tronçon avec des restrictions particulières.
 
 .. code-block:: sql
 
@@ -311,7 +311,7 @@ Si vous avez besoin de plusieurs restrictions pour une arrête donnée you devez
 	  11 |      3 |     10 |    2 |  4 |  3 |  4 |  5 |    1000 | 4
 	  11 |      3 |     10 |    2 |  4 |  3 |  4 |  5 |    1000 | 12
 
-... signifie que le coût pour aller soit du tronçon  4 soit du 12 au 11 est de 1000. Et donc vous devez ordoner vos données par gid lorsque vous chargez vos données dans la fonction de recherche de plus court chemin...
+... signifie que le coût pour aller soit du tronçon  4 soit du 12 au 11 est de 1000. Et donc vous devez ordonner vos données par gid lorsque vous chargez vos données dans la fonction de recherche de plus court chemin...
 
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -345,11 +345,11 @@ Un exemple d'utilisation de l'algorithme Shooting Star :
 
 .. warning::
 
-	L'algorithme Shooting Star calcul un chemin d'un tronçon à un autre (pas d'un sommet à un autre). La colonnes vertex_id contienr le point de départ du tronçon de la colonne edge_id.
+	L'algorithme Shooting Star calcule un chemin d'un tronçon à un autre (pas d'un sommet à un autre). La colonnes vertex_id contient le point de départ du tronçon de la colonne edge_id.
 
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Envelopper
+Enveloppe (Wrapper)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: sql
