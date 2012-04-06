@@ -9,7 +9,7 @@ Pour ces travaux pratiques, vous aurez besoin de :
 * Un éditeur de texte comme Gedit
 * Une connexion internet
 
-Tout les outils requis sont disponibles sur l'OSGeo LiveDVD, donc les références qui suivent représentent un rapide résumé de comment l'installer sur votre propre machine tournant sur Ubuntu 10.04 ou suppérieur.
+Tous les outils requis sont disponibles sur l'OSGeo LiveDVD, donc les références qui suivent représentent un rapide résumé de comment l'installer sur votre propre machine tournant sur Ubuntu 10.04 ou suppérieur.
 
 --------------------------------------------------------------------------------------------------------------
 pgRouting
@@ -34,15 +34,17 @@ Tout ce que vous avez à faire maintenant c'est d'ouvrir une fenêtre de termina
 	# Installer le paquet osm2pgrouting
 	sudo apt-get install osm2pgrouting
 
-	# Installé le contenu des travaux pratiques (optionel)
+	# Installer le contenu des travaux pratiques (optionnel)
 	sudo apt-get install pgrouting-workshop
 
 Cela installera aussi tout les paquets dépendants comme PostgreSQL et PostGIS s'ils ne sont pas déjà installés.
 
+Il est possible à partir de la version 11.10 de Ubuntu d'installer PostgreSQL 9.1 et les paquets correspondants pour pgRouting.
+
 .. note::
 
-	* Les paquets "multiverse" doivent être disponibles comme des sources de logiciels. Actuellement les paquets pour Ubuntu 10.04 à 11.04 sont disponibles.
-	* Pour prendre en compte les nouveaux dépôts et avoir une liste des tout deniers paquets à jour, vous devez lancer ``sudo apt-get update && sudo apt-get upgrade`` de temps en temps, tout spécialement si vous utilisez une ancienne version du LiveDVD.
+	* Les paquets "multiverse" doivent être disponibles comme des sources de logiciels. Actuellement les paquets pour Ubuntu 10.04 à 11.10 sont disponibles.
+	* Pour prendre en compte les nouveaux dépôts et avoir une liste des tous derniers paquets à jour, vous devez lancer ``sudo apt-get update && sudo apt-get upgrade`` de temps en temps, tout spécialement si vous utilisez une ancienne version du LiveDVD.
 	* Afin d'éviter les problèmes de permissions, vous pouvez utiliser la méthode de connexion ``trust`` dans ``/etc/postgresql/8.4/main/pg_hba.conf`` et redémarrer le serveur PostgreSQL avec ``sudo service postgresql-8.4 restart``.
 	
 --------------------------------------------------------------------------------------------------------------
@@ -51,7 +53,7 @@ Travaux pratiques
 
 Suite à l'installation du paquet workshop, vous touverez tout les documents dans ``/usr/share/pgrouting/workshop/``.
 
-Nous recommendons de copier l'ensemble de ces fichiers dans le répertoire de votre utilisateur et de créer un lient symbolique vers votre serveur web :
+Nous recommendons de copier l'ensemble de ces fichiers dans le répertoire de votre utilisateur et de créer un lien symbolique vers votre serveur web :
 
 .. code-block:: bash
 	
@@ -65,7 +67,7 @@ Vous pouvez ensuite trouver les fichiers des travaux pratiques dans le répertoi
 
 .. note::
 
-	Des exemples de données additionelles sont disponibles dans le répertoire ``data`` des travaux pratique. Ils contiennent un fichier compressé contenant les sauvegardes de base de données ainsi qu'un plus petit ensemble de données du réseau routier du centre ville de Denver. Pour décompresser ce fichier, exécuter la commande ``tar -xzf ~/Desktop/pgrouting-workshop/data.tar.gz``.
+	Des exemples de données additionelles sont disponibles dans le répertoire ``data`` des travaux pratiques. Ils contiennent un fichier compressé contenant les sauvegardes de base de données ainsi qu'un plus petit ensemble de données du réseau routier du centre ville de Denver. Pour décompresser ce fichier, exécuter la commande ``tar -xzf ~/Desktop/pgrouting-workshop/data.tar.gz``.
 
 
 --------------------------------------------------------------------------------------------------------------
@@ -74,21 +76,21 @@ Base de données à partir de modèle
 
 C'est une bonne idée de créer un modèle de bases de données PostGIS et pgRouting. Cela rendra plus facile la création de nouvelles bases de données incluant déjà les fonctionnalités requises, sans avoir à charger les fichiers SQL pour chaque nouvelle base.
 
-Un script est disponible dans le répertoire ``bin`` des travaux pratiques pour ajouter des modèles de bases de données incluant les fonctionnalités de PostGIS et pgRouting. Pour créer une base de données modèles, exécutez les commandes suivantes depuis une fenêtre de terminal :
+Un script est disponible dans le répertoire ``bin`` des travaux pratiques pour ajouter des modèles de bases de données incluant les fonctionnalités de PostGIS et pgRouting. Pour créer une base de données modèle, exécutez les commandes suivantes depuis une fenêtre de terminal :
 
 .. code-block:: bash
 	
 	cd ~/Desktop/pgrouting-workshop
 	bash bin/create_templates.sh
 
-Maintenant vous pouvez créer une nouvelle base incluant les fonctionnalités pgRouting en utilsant ``template_routing`` comme modèle. Lancez la commande suivante dans une fenêtre de terminal :
+Maintenant vous pouvez créer une nouvelle base incluant les fonctionnalités pgRouting en utilisant ``template_routing`` comme modèle. Lancez la commande suivante dans une fenêtre de terminal :
 
 .. code-block:: bash
 	
 	# Création de la base de données "routing"
 	createdb -U postgres -T template_routing routing
 
-Vous povez aussi utiliser **PgAdmin III** et des commandes SQL. Démarrez PgAdmin III (disponible sur le LiveDVD), connectez-vous à n'importe quelle base de données et ouvrez l'éditeur SQL afin de lancer les commandes SQL suivantes :
+Vous pouvez aussi utiliser **PgAdmin III** et des commandes SQL. Démarrez PgAdmin III (disponible sur le LiveDVD), connectez-vous à n'importe quelle base de données et ouvrez l'éditeur SQL afin de lancer les commandes SQL suivantes :
 
 .. code-block:: sql
 
@@ -109,7 +111,7 @@ Sans une base de données modèle, de nombreux fichiers contenant les fonctions 
 	# Passer en utilisateur "postgres" (ou lancez, en tant qu'utilisateur "postgres")
 	sudo su postgres
 
-	# Création d'un base routing
+	# Création d'une base routing
 	createdb routing
 	createlang plpgsql routing
 
@@ -122,7 +124,7 @@ Sans une base de données modèle, de nombreux fichiers contenant les fonctions 
 	psql -d routing -f /usr/share/postlbs/routing_core_wrappers.sql
 	psql -d routing -f /usr/share/postlbs/routing_topology.sql
 	
-Encore un fois, vous pouvez utiliser **PgAdmin III** et des commandes SQL. Démarrez PgAdmin III, connextez-vous à n'importe quelle base de données, ouvrez l'éditeur de commande SQL et saisissez les commandes suivantes :
+Encore une fois, vous pouvez utiliser **PgAdmin III** et y exécuter les commandes SQL. Démarrez PgAdmin III, connectez-vous à n'importe quelle base de données, ouvrez l'éditeur de commande SQL et saisissez les commandes suivantes :
 
 .. code-block:: sql
 
@@ -139,15 +141,14 @@ Connectez-vous ensuite à la base ``routing`` et ouvrez une nouvelle fenêtre d'
 Maintenant, ouvrez les fichiers ``.sql`` contenant les fonctions PostGIS/pgRouting listée précédemment et chargez les dans la base de données ``routing``.
 	
 .. note::
-
-	PostGIS ``.sql`` files can be stored in different directories. The exact location depends on your version of PostGIS and PostgreSQL. The example above is valid for PostgeSQL/PostGIS version 1.5 installed on OSGeo LiveDVD.
+    Les fichiers ``.sql`` de PostGIS peuvent se situer dans divers répertoires suivant votre installation. La localisation exacte dépend de votre version de PostGIS et de PostgreSQL. Les exemples ci-dessus sont valides pour PostgreSQL/PostGIS 8.4/1.5 installés sur le LiveDVD OSGeo.
 	
 
 --------------------------------------------------------------------------------------------------------------
 Données
 --------------------------------------------------------------------------------------------------------------
 
-Les travaux pratiques pgRouting utiliseront les données de Denver d'OpenStreetMap, quisont déjà disponibles sur le LiveDVD. Si vous n'utilisez pas le LiveDV ou si vous voulez télécharger les dernières données ou des données de votre choix, vous pouvez utiliser l'API OpenStreetMap depuis votre fenêtre de terminal :
+Les travaux pratiques pgRouting utiliseront les données de Denver d'OpenStreetMap, qui sont déjà disponibles sur le LiveDVD. Si vous n'utilisez pas le LiveDV ou si vous voulez télécharger les dernières données ou des données de votre choix, vous pouvez utiliser l'API OpenStreetMap depuis votre fenêtre de terminal :
 
 .. code-block:: bash
 	
@@ -156,7 +157,7 @@ Les travaux pratiques pgRouting utiliseront les données de Denver d'OpenStreetM
 		"http://jxapi.openstreetmap.org/xapi/api/0.6/*
 						[bbox=-105.2147,39.5506,-104.594,39.9139]"
 
-L'API a une limite de taille de téléchargment, ce qui peut être problématique pour télécharger une grande étendu géographique avec de nombreux éléments. Une alternative est d'utiliser  `l'éditeur JOSM <http://josm.openstreetmap.de>`_, qui utilisera aussi des appels à l'API pour télécharger les données, mais il fournit un interface facile d'utilisation pour les utilisateurs. Vous pouvez sauvegarder les données come un fichier ``.osm`` pour l'utiliser avec ces travaux pratiques. JSOM est aussi disponible sur le LiveDVD.
+L'API a une limite de taille de téléchargment, ce qui peut être problématique pour télécharger une grande étendu géographique avec de nombreux éléments. Une alternative est d'utiliser  `l'éditeur JOSM <http://josm.openstreetmap.de>`_, qui utilisera aussi des appels à l'API pour télécharger les données, mais il fournit une interface facile d'utilisation pour les utilisateurs. Vous pouvez sauvegarder les données dans un fichier ``.osm`` pour l'utiliser avec ces travaux pratiques. JSOM est aussi disponible sur le LiveDVD.
 
 .. note::
 
@@ -171,7 +172,7 @@ Une alternative, pour de très grandes étendues est d'utiliser le service de t�
 	
 .. warning::
 
-	Les données d'un pays complet peuvent être trop grande par rapport à l'espace disponible sur le LiveDVD et nécessité des temps de calculs extrêmement long.  
+	Les données d'un pays complet peuvent être trop grande par rapport à l'espace disponible sur le LiveDVD et nécessiter des temps de calculs extrêmement long.  
 	
 
 
