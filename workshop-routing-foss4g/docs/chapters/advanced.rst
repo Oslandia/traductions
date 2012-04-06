@@ -14,7 +14,7 @@ On parle généralement de **plus court** chemin, ce qui signifie que la longueu
 
 .. note::
 
-	Si vous souhaitez continuer avec une base de données contenant les fonctions pgRouting, les données exemples ainsi que les attributs nécessaires, vous pouvez charger le fichier de sauvegarded la manière suivante.
+	Si vous souhaitez continuer avec une base de données contenant les fonctions pgRouting, les données exemples ainsi que les attributs nécessaires, vous pouvez charger le fichier de sauvegarde de la manière suivante.
 
 .. code-block:: bash
 
@@ -28,9 +28,9 @@ On parle généralement de **plus court** chemin, ce qui signifie que la longueu
 Coûts pondérés
 -------------------------------------------------------------------------------------------------------------
 
-Dans un vrai réseau il y a différents types de limitations ou de préférences suivant les types de routes par exemple. En d'autre termes, nous ne voulons pas calculer *le plus court* chemin mais le chemin *le moins cher* - un chemin avec un coût minimum. Il n'y aucune limitation dans ce qui peut êtreutilsié pour définir le coût.
+Dans un vrai réseau il y a différents types de limitations ou de préférences suivant les types de routes par exemple. En d'autre termes, nous ne voulons pas calculer *le plus court* chemin mais le chemin *le moins cher* - un chemin avec un coût minimum. Il n'y aucune limitation dans ce qui peut être utilisé pour définir le coût.
 
-Lorsque nous avons convertis les données au format OSM en utilisant l'outil osm2pgrouting, nous avons deux autres tables permettant de déifinir les ``types`` de routes et les ``classes``.
+Lorsque nous avons converti les données au format OSM en utilisant l'outil osm2pgrouting, nous avons obtenu deux autres tables permettant de déifinir les ``types`` de routes et les ``classes``.
 
 .. note::
 
@@ -88,7 +88,7 @@ Lorsque nous avons convertis les données au format OSM en utilisant l'outil osm
 	 304 |       3 | grade4             |     
 	 305 |       3 | grade5             |     
 
-La classe de route est liée avec la tables des cheminspar le champ ``class_id``. Suite à l'importation des données la valeur de la colonne ``cost`` n'est pas encore attribuée. Sa valeur peut être modifiée à l'aide d'une requête ``UPDATE``. Dans cet exemple les valeurs de coût pour la table des classe sont assigné de façon arbitraire, donc nous exécutons :
+La classe de route est liée avec la table des chemins par le champ ``class_id``. Suite à l'importation des données la valeur de la colonne ``cost`` n'est pas encore attribuée. Sa valeur peut être modifiée à l'aide d'une requête ``UPDATE``. Dans cet exemple les valeurs de coût pour la table des classe sont assignées de façon arbitraire, donc nous exécutons :
 
 .. code-block:: sql
 
@@ -121,7 +121,7 @@ L'idée de ces deux tables est de les utiliser afin de spécifier un facteur qui
 Restriction d'accès
 -------------------------------------------------------------------------------------------------------------
 
-Une autre possibilité est de restreindre l'accès à des routes d'un certains types soit en affectant un coût très élevé à un tronçon ayant un certain attribut soit en s'assurant de ne sélectionner aucun de ces tronçons :
+Une autre possibilité est de restreindre l'accès à des routes d'un certain type soit en affectant un coût très élevé à un tronçon ayant un certain attribut soit en s'assurant de ne sélectionner aucun de ces tronçons :
 
 .. code-block:: sql
 
@@ -139,5 +139,5 @@ Bien entendu, certaines classes de tronçon peuvent aussi être exclues à l'aid
 		FROM ways w, classes c 
 		WHERE class_id=c.id AND class_id != 111', 6585, 8247, true, true);
 
-Bien entendu, pgRouting vus permet tout types de requêtes SQL supportées par PostgreSQL/PostGIS.
+Bien entendu, pgRouting vus permet tout type de requête SQL supportée par PostgreSQL/PostGIS.
  
