@@ -2,19 +2,19 @@
 Création de la topologie du réseau
 ==============================================================================================================
 
-:doc:`osm2pgrouting <osm2pgrouting>` est un outil pratique, mais c'est aussi une *boîte noire*. Il y a de nombreux cas où :doc:`osm2pgrouting <osm2pgrouting>` ne peut pas être utilisé. Certaines données de réseau sont fournies avec la topologie du réseau qui peut être utilisé par pgRouting tel-quel. Certaines données de réseau sont stockées au format Shape file (``.shp``) et nous pouvons les charger dans une base de données PostgreSQL à l'aide de l'outil de conversion de PostGIS' ``shape2postgresql`. But what to do then?
+:doc:`osm2pgrouting <osm2pgrouting>` est un outil pratique, mais c'est aussi une *boîte noire*. Il y a de nombreux cas où :doc:`osm2pgrouting <osm2pgrouting>` ne peut pas être utilisé. Certaines données de réseau sont fournies avec la topologie du réseau qui peut être utilisé par pgRouting tel-quel. Elles peuvent être stockées au format Shape file (``.shp``) et nous pouvons les charger dans une base de données PostgreSQL à l'aide de l'outil de conversion de PostGIS' ``shape2postgresql``.  Mais ensuite, comment fait-on ?
 
 .. image:: images/network.png
 	:width: 250pt
 	:align: center
 
-Dans ce chapitre vous allez apprendre comment créer une topologie de réseau en partant de rien. Pour ce faire, nous allons commencer par les données qui contiennent les attributs minimum requis pour le routage et comment constituer étape par étape des données pour pgRouting.
+Dans ce chapitre vous allez apprendre comment créer une topologie de réseau en partant de zéro. Pour ce faire, nous allons commencer par les données qui contiennent les attributs minimum requis pour le routage et comment constituer étape par étape des données pour pgRouting.
 
 -------------------------------------------------------------------------------------------------------------
 Charger les données de réseau
 -------------------------------------------------------------------------------------------------------------
 
-Au début nous allors charger une sauvegarde de base de données à partir du répertoire ``data``des travxu pratiques. Ce répertoire contient un fichier compressé incluant une sauvegarde de base de données ainsi qu'un plus petit ensemble de données de réseau du centre ville de Denver. Si vous n'avez pas encore décompressé, faite le en utilisant la comande :
+Au début nous allons charger une sauvegarde de base de données à partir du répertoire ``data`` des travaux pratiques. Ce répertoire contient un fichier compressé incluant une sauvegarde de base de données ainsi qu'un plus petit ensemble de données de réseau du centre ville de Denver. Si vous n'avez pas encore décompressé, faites le en utilisant la comande :
 
 .. code-block:: bash
 
@@ -49,7 +49,7 @@ Regardons quelles tables ont été créées :
 	(6 rows)
 
 	
-La table contenant les données du réseau routier onle nom ``ways``. Elle possède les attributs suivants :
+La table contenant les données du réseau routier a le nom ``ways``. Elle possède les attributs suivants :
 	
 .. rubric:: Lancer : ``psql -U postgres -d pgrouting-workshop -c "\d ways"``
 	
@@ -80,7 +80,7 @@ Il est habituel dans des données de réseau routier de retrouver au moins les i
 * Nom du tronçon (name)
 * La géométrie du tronçon (the_geom)
 
-Cela permet d'afficher le réseau routier comme une couche PostGIS depuis un logiciel SIG, par exemple dans QGIS. Notez ue les informations ne suffisent pas au calcul de routes étant donné qu'il ne contient aucune information relative à la topolgie du réseau.
+Cela permet d'afficher le réseau routier comme une couche PostGIS depuis un logiciel SIG, par exemple dans QGIS. Notez que les informations ne suffisent pas au calcul de routes étant donné qu'il ne contient aucune information relative à la topologie du réseau.
 
 La prochaine étape consiste à démarrer l'outil en ligne de commande PostgreSQL
 
@@ -95,9 +95,9 @@ La prochaine étape consiste à démarrer l'outil en ligne de commande PostgreSQ
 Calcul de la topologie
 --------------------------------------------------------------------------------------------------------------
 
-Pour avoir vos données importé dans une base de données PostgreSQL requière généralement des étapes supplémentaires pour pgRouting. Vous devez vous assurer que vos données fournissent une topologie correcte du réseau, ce qui correspond aux informations par rapport au début et à la fin d'un tronçon.
+Pour avoir vos données correctement importées dans une base de données PostgreSQL, il faut généralement des étapes supplémentaires pour pgRouting. Vous devez vous assurer que vos données ont une topologie correcte du réseau, c'est à dire que les informations de début et de fin de tronçons sont correctes.
 
-Si les données de votre réseau ont une déjà telle information vous devez exécuter la fonctions ``assign_vertex_id``. Cette fonction permet l'assignation des valeurs pour les colonnes ``source`` et ``target`` pour chaque tronçon et il peut prendre en compte le fait qu'un sommet puisse être éloigné d'un autre suivant une certaine tolérance.
+Si les données de votre réseau n'ont pas d'information explicite de topologie, vous devez exécuter la fonctions ``assign_vertex_id``. Cette fonction permet l'assignation des valeurs pour les colonnes ``source`` et ``target`` pour chaque tronçon et il peut prendre en compte le fait qu'un sommet puisse être éloigné d'un autre suivant une certaine tolérance.
 
 .. code-block:: sql
 
@@ -116,11 +116,11 @@ Premièrement nous devons ajouter les colonnes source et target, pour ensuite ut
 
 .. note::
 
-	Exécuter ``psql -U postgres -d pgrouting-workshop`` depuis votre terminal afin de vous connecter ààl a base de données et lancer des commandes PostgreSQL en ligne. Quiter la session avec la commande ``\q`` .   
+	Exécuter ``psql -U postgres -d pgrouting-workshop`` depuis votre terminal afin de vous connecter à la base de données et lancer des commandes PostgreSQL en ligne. Quitter la session avec la commande ``\q`` .   
 
 .. warning::
 
-	La dimension du paramètre tolérance dépends du système de projection de vos données. Habituellement c'est soit "degrés" soit "mètres".
+	La dimension du paramètre tolérance dépend du système de projection de vos données. Habituellement c'est soit "degrés" soit "mètres".
 
 
 -------------------------------------------------------------------------------------------------------------
