@@ -2,27 +2,27 @@
 Outils d'import osm2pgrouting
 ==============================================================================================================
 
-**osm2pgrouting** est un outils en ligne de commande qui rend simple l'importation de données OpenStreetMap dans une base de données pgRouting. Il contruit le réseau routier automatiquement et crée les tables pour les types de données et les classes de routes. osm2pgrouting a été écrit initialement par Daniel Wendt et est maintenant disponible sur le site du projet pgRouting : http://www.pgrouting.org/docs/tools/osm2pgrouting.html
+**osm2pgrouting** est un outil en ligne de commande qui rend simple l'importation de données OpenStreetMap dans une base de données pgRouting. Il contruit le réseau routier automatiquement et crée les tables pour les types de données et les classes de routes. osm2pgrouting a été écrit initialement par Daniel Wendt et est maintenant disponible sur le site du projet pgRouting : http://www.pgrouting.org/docs/tools/osm2pgrouting.html
 
 .. note::
 
-	Il y a quelques limitations, particulièrement par rapport à la taille du réseay. La version actuelle nécessite le chargement en mémoire de l'ensemble des données, ce qui le rend rapide mais consome aussi beaucoup de mémoire pour les gros enesemble d'objets. Un outils alternatif n'ayant pas de limitation sur la taille du réseauest **osm2po** (http://osm2po.de). Il est disponible sous licence "Freeware License".
+	Il y a quelques limitations, particulièrement par rapport à la taille du réseay. La version actuelle nécessite le chargement en mémoire de l'ensemble des données, ce qui le rend rapide mais consomme aussi beaucoup de mémoire pour les gros ensembles d'objets. Un outil alternatif n'ayant pas de limitation sur la taille du réseau est **osm2po** (http://osm2po.de). Il est disponible sous licence "Freeware License".
 	
 
-Les données brutres d'OpenStreetMap contiennent bien plus d'éléments et d'informations qu'il est nécessaire pour du routage. Ainsi le format n'est pas utilisable tel-quel avec pgRouting. Un fichier XML ``.osm`` contient trois types de données majeurs :
+Les données brutes d'OpenStreetMap contiennent bien plus d'éléments et d'informations qu'il est nécessaire pour du routage. Ainsi le format n'est pas utilisable tel-quel avec pgRouting. Un fichier XML ``.osm`` contient trois types de données majeurs :
 
 * noeuds
 * chemins
 * relations
 
-Les données de sampledata.osm par exemple ressemble à ce qui suit :
+Les données de sampledata.osm par exemple ressemblent à ce qui suit :
 
 .. literalinclude:: code/osm_sample.osm
 	:language: xml
 
-Une description détaillée de tout les types et classes possibles d'OpenStreetMap peuvent-être trouvé ici : http://wiki.openstreetmap.org/index.php/Map_features.
+Une description détaillée de tous les types et classes possibles d'OpenStreetMap peut être trouvée ici : http://wiki.openstreetmap.org/index.php/Map_features.
 
-Lorsuqe vous utilisez osm2pgrouting, nous devons conserver uniquement les noeuds et les chemin ayant pour types et classes celles stipulée dans le fichier ``mapconfig.xml`` qui seront improtés dans notre base de données routing :
+Lorsque nous utilisons osm2pgrouting, nous devons conserver uniquement les noeuds et les chemins ayant pour types et classes celles stipulées dans le fichier ``mapconfig.xml`` qui seront importés dans notre base de données routing :
 
 .. literalinclude:: code/mapconfig_sample.xml
 	:language: xml
@@ -43,7 +43,7 @@ Si vous avez installé le modèle de base de données comme décrit dans le chap
 	
 ... vous avez terminé.
 
-Une alternative consiste à  utiliser l'outil **PgAdmin III** et des requêtes SQL. Démarrez  PgAdmin III (disponible sur le LiveDVD), connectez vous à une base de données eyt ouvrez l'éditeur de requêtes afin d'y saisir les requêtes SQL suivantes :
+Une alternative consiste à  utiliser l'outil **PgAdmin III** et des requêtes SQL. Démarrez  PgAdmin III (disponible sur le LiveDVD), connectez vous à une base de données et ouvrez l'éditeur de requêtes afin d'y saisir les requêtes SQL suivantes :
 
 .. code-block:: sql
 
@@ -58,11 +58,11 @@ Sinon, vous devez manuellement charger les différents fichier dans la base de d
 Utiliser osm2pgrouting
 -------------------------------------------------------------------------------------------------------------
 
-La prochaine étape c'est de lancer l'outil ``osm2pgrouting``, qui est un outil en ligne de commande, donc vous devrez l'utiliser depuis une fenêtre de terminal.
+La prochaine étape est de lancer l'outil ``osm2pgrouting``, qui est un outil en ligne de commande, donc vous devrez l'utiliser depuis une fenêtre de terminal.
 
-Nous prendrons par défaut le fichier de configuration ``mapconfig.xml`` et la base de données ``routing`` que nous avons créer précédemment. De plus nous prendrons le fichier ``~/Desktop/pgrouting-workshop/data/sampledata.osm`` comme données brutes. Ce fichier contient seulement les données OSM du centre ville de Denver afin d'accélérer le processus de chargement des données.
+Nous prendrons par défaut le fichier de configuration ``mapconfig.xml`` et la base de données ``routing`` que nous avons créée précédemment. De plus nous prendrons le fichier ``~/Desktop/pgrouting-workshop/data/sampledata.osm`` comme données brutes. Ce fichier contient seulement les données OSM du centre ville de Denver afin d'accélérer le processus de chargement des données.
 
-Les données sont disponibles au format compressé, qui doit donc être décompressé soit en utlisant un navigateur de fichiers soit en utilisant la commande suivante :
+Les données sont disponibles au format compressé, qui doit donc être décompressé soit en utilisant un navigateur de fichiers soit en utilisant la commande suivante :
 
 .. code-block:: bash
 
@@ -126,7 +126,7 @@ Liste des paramètres possible :
 	Si vous obtenez un message d'erreur relatif aux droits de l'utilisateur postgres, vous pouvez définir la méthode comme ``trust`` dans le fichier  ``/etc/postgresql/8.4/main/pg_hba.conf`` et redémarrer le serveur PostgreSQL avec la commande ``sudo service postgresql-8.4 restart``.
 
 
-Suivant la taille de votre réseau le temps de cacul et d'importation de données peut être long. Une fois terminé, connectez à votre base de données et vérifiez les tables qui aurait du être créées :
+Suivant la taille de votre réseau le temps de calcul et d'importation de données peut être long. Une fois terminé, connectez vous à votre base de données et vérifiez les tables qui auraient du être créées :
 
 .. rubric:: Lancer: ``psql -U postgres -d routing -c "\d"``	
 
